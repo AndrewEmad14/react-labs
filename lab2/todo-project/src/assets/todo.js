@@ -16,3 +16,4 @@ const Todo = [
         status:AVILABLE_STATUS.FINISHED
     }
 ]
+export default Todo;
