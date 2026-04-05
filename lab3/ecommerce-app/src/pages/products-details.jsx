@@ -2,11 +2,17 @@ import { use, useState, useEffect } from "react";
 import { Link } from "react-router";
 import { useParams } from "react-router"
 import IncDecButton from "../components/product/incdec-button";
+import { useDispatch,useSelector } from "react-redux";
+import { addToCart } from "../store/cart-slice";
+
 const ProductDetails = () => {
+
   const { id } = useParams();
   const [productDetails, setProductDetails] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const [quantity, setQuantity] = useState(1);
+  const item = useSelector(state=>state.cart.items.find(item=>item.id==id))
+  const dispatcher = useDispatch()
+
   useEffect(() => {
     const fetchProductDetails = async () => {
       const data = await fetch(`https://dummyjson.com/products/${id}`).then((response) => {
@@ -15,7 +21,7 @@ const ProductDetails = () => {
         }
         return response.json();
       })
-      console.log(data);
+
       setProductDetails(data);
       setIsLoading(false);
     }
@@ -23,7 +29,7 @@ const ProductDetails = () => {
 
   }, [id])
 
-  const handleQuantity = (e) => setQuantity(e); 
+
 
 
   if (isLoading) return <h1>Loading...</h1>
@@ -56,10 +62,10 @@ const ProductDetails = () => {
               <p key={tag} className="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full">{tag}</p>
             ))}
           </div>
-          <IncDecButton quantity={quantity} handleQuantity={handleQuantity}/>
+          <IncDecButton product={productDetails}/>
           <div className="flex flex-row gap-3">
-            <button className="flex-1 bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition-colors">Add to cart</button>
-            <Link to={`/cart`}  className="flex-1 bg-orange-700 text-center text-white py-3 rounded-lg hover:bg-orange-900 transition-colors">
+            <button onClick={()=>dispatcher(addToCart(productDetails))} className="flex-1 bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition-colors">Add to cart</button>
+            <Link to={`/cart`} onClick={()=>{!item && dispatcher(addToCart(productDetails))}} className="flex-1 bg-orange-700 text-center text-white py-3 rounded-lg hover:bg-orange-900 transition-colors">
             Buy now
             </Link>
           </div>

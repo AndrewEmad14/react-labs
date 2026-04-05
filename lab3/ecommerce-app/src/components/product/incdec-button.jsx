@@ -1,22 +1,42 @@
-import { use } from "react";
+import { use, useState } from "react";
+import { useDispatch,useSelector } from "react-redux";
+import { addToCart,decrementQuantity, removeFromCart } from "../../store/cart-slice";
+const IncDecButton = ({product}) => {
+  const dispatch = useDispatch()
+  const item = useSelector(state=>state.cart.items.find(item=>item.id==product.id))
 
-const IncDecButton = ({quantity,handleQuantity}) => {
 
-  const handleIncrement = () => {quantity < 10 && handleQuantity(quantity + 1)};
-  const handleDecrement = () => { quantity > 1 && handleQuantity(quantity - 1)};
+  const handleIncrement = () => {
+    if(item){
+      item.quantity < 10 && dispatch(addToCart(item));
+    }else{
+     
+      dispatch(addToCart(product))
+    }
+  };
+  const handleDecrement = () => { 
+   if(item){
+      if(item.quantity>0){
+        dispatch(decrementQuantity(item));
+      }else{
+        
+        dispatch(removeFromCart(item));
+      }
+   }
+  };
 
   return (
           <div className="flex flex-row items-center gap-3">
         <button 
-          onClick={handleIncrement}
-          className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold transition-colors">
-          +
-        </button>
-        <span className="w-6 text-center font-semibold text-gray-900">{quantity}</span>
-        <button 
           onClick={handleDecrement}
           className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold transition-colors">
           -
+        </button>
+        <span className="w-6 text-center font-semibold text-gray-900">{item? item.quantity : 0}</span>
+        <button 
+          onClick={ handleIncrement}
+          className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold transition-colors">
+          +
         </button>
       </div>
   );

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState,useContext } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router'
 import Home from './pages/home'
 import Register from './pages/register'
@@ -8,13 +8,13 @@ import NotFound from './pages/not-found'
 import ProductDetails from './pages/products-details'
 import './App.css'
 import NavBar from './components/nav-bar/nav-bar'
-
+import { LanguageProvider } from './providers/language'
+import { languageContext } from './context/language'
 function App() {
-  const [count, setCount] = useState(0)
-
+  const {language}  = useContext(languageContext);
   return (
-    <>
-      <BrowserRouter>
+    <div dir={language === 'ar' ? 'rtl' : 'ltr'}>
+      
         <NavBar/>
           <Routes>
               <Route path="/" element={<Home/>}/>
@@ -24,8 +24,8 @@ function App() {
               <Route path='/cart'element={<Cart/>}></Route>
               <Route path="*" element={<NotFound/>}/>
           </Routes>
-      </BrowserRouter>
-    </>
+   
+    </div>
     
   )
 }

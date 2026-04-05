@@ -1,9 +1,14 @@
-import { Link } from "react-router"
+import { useNavigate } from "react-router"
+import { useDispatch} from 'react-redux'
+import { addToCart } from "../../store/cart-slice"
 
+const ProductCard = (product) => {
+  const { title, price, description, rating, stock, thumbnail, id } = product
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
-const ProductCard = ({ title, price, description, rating, stock, thumbnail, id }) => {
   return (
-    <div className="rounded-lg shadow-md p-4 bg-white flex flex-col gap-3 max-w-sm">
+    <div onClick={() => navigate(`/products/${product.id}`)}  className="rounded-lg shadow-md p-4 bg-white flex flex-col gap-3 max-w-sm">
 
       {/* Image + stock badge container */}
       <div className="relative">
@@ -20,7 +25,7 @@ const ProductCard = ({ title, price, description, rating, stock, thumbnail, id }
       <p className="text-yellow-500 text-sm">⭐ {rating}</p>
 
     
-       <button className="bg-blue-500 text-white py-2 w-full rounded-lg hover:bg-blue-600 transition-colors">Add to cart</button> 
+       <button onClick={(e)=>{e.stopPropagation();dispatch(addToCart(product))}} className="bg-blue-500 text-white py-2 w-full rounded-lg hover:bg-blue-600 transition-colors">Add to cart</button> 
      
     </div>
   )

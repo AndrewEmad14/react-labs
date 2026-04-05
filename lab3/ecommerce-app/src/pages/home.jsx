@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useContext } from "react";
 import ProductCard from "../components/product/product-card";
 import Pagenation from "../components/product/pagenation";
 import { Link } from "react-router";
-
+import { languageContext } from "../context/language";
+languageContext
 const LIMIT = 5;
 
 const Home = () => {
+  const {language} = useContext(languageContext);
   const [products,setProducts] = useState([]);
   const [page,setPage] = useState(0);
   const skip = LIMIT*page;
@@ -28,11 +30,11 @@ const Home = () => {
 
   return (
     <div>
-          <div className="flex flex-wrap gap-4 p-4 justify-center">
+          <div  className="flex flex-wrap gap-4 p-4 justify-center">
               {
                   products.map((product,index)=>{ 
                     if(index >= skip && index < skip+LIMIT){
-                      return <Link key={product.id} to={`/products/${product.id}`}><ProductCard {...product}/></Link>
+                      return <ProductCard key={product.id} {...product}/>
                     }
                 })
               }
