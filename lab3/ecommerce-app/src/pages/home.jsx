@@ -4,7 +4,7 @@ import Pagenation from "../components/product/pagenation";
 import { Link } from "react-router";
 import { languageContext } from "../context/language";
 languageContext
-const LIMIT = 5;
+const LIMIT = 8;
 
 const Home = () => {
   const {language} = useContext(languageContext);

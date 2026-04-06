@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { useParams } from "react-router"
 import IncDecButton from "../components/product/incdec-button";
 import { useDispatch,useSelector } from "react-redux";
-import { addToCart } from "../store/cart-slice";
+import { addToCart } from "../redux/reducers/cart-slice";
 
 const ProductDetails = () => {
 

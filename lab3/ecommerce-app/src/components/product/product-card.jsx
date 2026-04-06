@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router"
 import { useDispatch} from 'react-redux'
-import { addToCart } from "../../store/cart-slice"
+import { addToCart } from "../../redux/reducers/cart-slice"
 
 const ProductCard = (product) => {
   const { title, price, description, rating, stock, thumbnail, id } = product

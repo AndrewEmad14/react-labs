@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { removeFromCart } from "../store/cart-slice";
+import { removeFromCart } from "../redux/reducers/cart-slice";
 import IncDecButton from "../components/product/incdec-button";
 
 const Cart = () => {

@@ -1,6 +1,6 @@
-import { use, useState } from "react";
+
 import { useDispatch,useSelector } from "react-redux";
-import { addToCart,decrementQuantity, removeFromCart } from "../../store/cart-slice";
+import { addToCart,decrementQuantity, removeFromCart } from "../../redux/reducers/cart-slice";
 const IncDecButton = ({product}) => {
   const dispatch = useDispatch()
   const item = useSelector(state=>state.cart.items.find(item=>item.id==product.id))
